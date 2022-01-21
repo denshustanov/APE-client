@@ -5,10 +5,10 @@ import 'http_service.dart';
 import 'package:astro_photo_environment/capturing/camera_config.dart';
 
 class HttpServiceImpl extends HttpService{
-  String moduleURL = 'http://127.0.0.1';
-  int modulePort = 5000;
-  String username = 'admin';
-  String password = 'admin';
+  String _moduleURL = 'http://127.0.0.1';
+  int _modulePort = 5000;
+  String _username = 'admin';
+  String _password = 'admin';
 
 
 
@@ -30,8 +30,8 @@ class HttpServiceImpl extends HttpService{
   @override
   Future<CameraConfig> connectCamera() async {
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+connectCameraRoute,
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+connectCameraRoute,
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
       return CameraConfig.fromJson(jsonDecode(res.body.toString()));
@@ -43,16 +43,16 @@ class HttpServiceImpl extends HttpService{
   @override
   void disconnectCamera() async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+disconnectCameraRoute,
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+disconnectCameraRoute,
         headers: <String, String>{'authorization': basicAuth});
   }
 
   @override
   Future<String> capture() async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+captureCameraRoute,
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+captureCameraRoute,
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
       return res.body.toString();
@@ -64,8 +64,8 @@ class HttpServiceImpl extends HttpService{
   @override
   void setIsoConfig(String value) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+setConfigCameraRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+setConfigCameraRoute+
     '?setting=iso&value='+value.replaceAll(' ', '%20'),
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -78,8 +78,8 @@ class HttpServiceImpl extends HttpService{
   @override
   void setShutterSpeedConfig(String value) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+setConfigCameraRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+setConfigCameraRoute+
         '?setting=shutterspeed&value='+value.replaceAll(' ', '%20'),
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -92,8 +92,8 @@ class HttpServiceImpl extends HttpService{
   @override
   void setImageFormatConfig(String value) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+setConfigCameraRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+setConfigCameraRoute+
         '?setting=imageformat&value='
         +value.replaceAll(' ', '%20').replaceAll('+', '%2b'),
         headers: <String, String>{'authorization': basicAuth});
@@ -107,8 +107,8 @@ class HttpServiceImpl extends HttpService{
   @override
   Future<List<String>> getSerialDevices() async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+getSerialDevicesRoute,
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+getSerialDevicesRoute,
         headers: <String, String>{'authorization': basicAuth});
     return (json.decode(res.body) as List<dynamic>).cast<String>();
   }
@@ -116,8 +116,8 @@ class HttpServiceImpl extends HttpService{
   @override
   Future<String> connectTelescope(String device) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+connectTelescopeRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+connectTelescopeRoute+
     '?port='+device,
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -130,8 +130,8 @@ class HttpServiceImpl extends HttpService{
   @override
   void slewTelescope(int motor, int rate) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+telescopeSlewRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+telescopeSlewRoute+
         '?rate='+rate.toString()+'&motor='+motor.toString(),
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -144,8 +144,8 @@ class HttpServiceImpl extends HttpService{
   @override
   Future<List<double>> getTelescopeCoordinates() async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+telescopeGetCoordinatesRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+telescopeGetCoordinatesRoute+
         '?mode=ra_dec',
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -158,8 +158,8 @@ class HttpServiceImpl extends HttpService{
   @override
   void goToTelescope(int c1, int c2) async{
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Response res = await get(moduleURL+':'+modulePort.toString()+telescopeSlewRoute+
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_moduleURL+':'+_modulePort.toString()+telescopeSlewRoute+
         '?c1='+c1.toString()+'&c2='+c2.toString(),
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
@@ -168,6 +168,42 @@ class HttpServiceImpl extends HttpService{
       throw Exception('Error: can not set value');
     }
   }
+
+  @override
+  String getModuleUrl() {
+    return _moduleURL;
+  }
+
+  @override
+  void setModuleUrl(String moduleUrl) {
+    _moduleURL = moduleUrl; 
+  }
+
+  @override
+  int getModulePort() {
+    return _modulePort;
+  }
+
+  @override
+  void setModulePort(int modulePort) {
+    _modulePort = modulePort;
+  }
+
+  @override
+  String getLogin() {
+    return _username;
+  }
+
+  @override
+  void setLogin(String login) {
+    _username = login;
+  }
+
+  @override
+  void setPassword(String password) {
+    _password = password;
+  }
+
 
 
 }

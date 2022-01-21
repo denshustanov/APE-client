@@ -22,4 +22,15 @@ abstract class HttpService {
   void goToTelescope(int c1, int c2);
 
   Future<List<double>> getTelescopeCoordinates();
+
+  String getModuleUrl();
+  void setModuleUrl(String moduleUrl);
+
+  int getModulePort();
+  void setModulePort(int modulePort);
+
+  String getLogin();
+  void setLogin(String login);
+
+  void setPassword(String password);
 }

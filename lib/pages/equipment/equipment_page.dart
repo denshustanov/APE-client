@@ -10,30 +10,6 @@ class EquipmentPage extends StatefulWidget {
 }
 
 class _EquipmentPageState extends State<EquipmentPage> {
-  final HttpServiceImpl _httpService = HttpServiceImpl();
-  bool _mountConnected = false;
-  String _mountModelName = '';
-
-  int _slewRate = 9;
-  double _slewRateSliderValue = 9;
-  bool _topArrowPressed = false;
-  bool _leftArrowPressed = false;
-  bool _rightArrowPressed = false;
-  bool _bottomArrowPressed = false;
-
-  double _rightAscension = 54.132313;
-  double _declination = 31.1123;
-
-  TextEditingController _raDegreesController = TextEditingController(text: '0');
-  TextEditingController _raMinutesController = TextEditingController(text: '0');
-  TextEditingController _raSecondsController = TextEditingController(text: '0');
-
-  TextEditingController _decDegreesController =
-      TextEditingController(text: '0');
-  TextEditingController _decMinutesController =
-      TextEditingController(text: '0');
-  TextEditingController _decSecondsController =
-      TextEditingController(text: '0');
 
   @override
   Widget build(BuildContext context) {
