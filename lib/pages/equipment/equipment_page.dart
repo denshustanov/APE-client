@@ -13,6 +13,8 @@ class _EquipmentPageState extends State<EquipmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _mountControl = MountControl();
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -34,7 +36,7 @@ class _EquipmentPageState extends State<EquipmentPage> {
           indicatorColor: Colors.redAccent,
           ),
         body: TabBarView(children: [
-          MountControl(),
+          _mountControl,
           Center(
             child: Text(
               "Focuser",

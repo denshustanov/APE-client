@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:astro_photo_environment/pages/capturing/capturing_settings_page.dart';
+import 'package:astro_photo_environment/settings/connection_settings_page.dart';
+import 'package:astro_photo_environment/settings/equipment_settings_page.dart';
+import 'package:astro_photo_environment/settings/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -27,7 +31,14 @@ class MyApp extends StatelessWidget{
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.dark,
-      home: HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/settings': (context) => SettingsPage(),
+        '/settings/connection': (context) => ConnectionSettingsPage(),
+        '/capturing/settings': (context) => CapturingSettingsPage(),
+        '/settings/equipment': (context) => EquipmentSettingsPage(),
+      },
     );
   }
 }

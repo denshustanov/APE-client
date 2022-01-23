@@ -14,9 +14,11 @@ class MountControl extends StatefulWidget{
 
 }
 
-class _MountControlState extends State<MountControl>{
-  final HttpService _httpService = getIt<HttpService>();
+class _MountControlState extends State<MountControl> with AutomaticKeepAliveClientMixin<MountControl>{
 
+
+  final HttpService _httpService = getIt<HttpService>();
+  String _serialDevice = '';
   bool _mountConnected = false;
   String _mountModelName = '';
 
@@ -84,7 +86,9 @@ class _MountControlState extends State<MountControl>{
                   onPressed: () async {
                     List<String> serialDevices =
                     await _httpService.getSerialDevices();
-                    String device = serialDevices[0];
+                    setState(() {
+                      _serialDevice = serialDevices[0];
+                    });
                     List<DropdownMenuItem<String>> deviceItems = [];
                     for (String device in serialDevices) {
                       deviceItems.add(DropdownMenuItem(
@@ -102,22 +106,20 @@ class _MountControlState extends State<MountControl>{
                               children: [
                                 DropdownButton<String>(
                                     items: deviceItems,
-                                    value: device,
+                                    value: _serialDevice,
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        device = newValue!;
+                                        _serialDevice = newValue!;
                                       });
                                     }),
                                 IconButton(
                                     onPressed: () async {
-                                      try {
                                         String model = await _httpService
-                                            .connectTelescope(device);
+                                            .connectTelescope(_serialDevice);
                                         setState(() {
                                           _mountModelName = model;
                                           _mountConnected = true;
                                         });
-                                      } catch (e) {}
                                     },
                                     icon: const Icon(Icons.cable))
                               ],
@@ -447,5 +449,8 @@ class _MountControlState extends State<MountControl>{
       }
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

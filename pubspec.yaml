@@ -37,6 +37,7 @@ dependencies:
   control_pad: ^1.1.1+1
   circular_widgets: ^2.0.0
   get_it: ^6.0.0
+  shared_preferences:  ^2.0.12
 
 
   # The following adds the Cupertino Icons font to your application.
