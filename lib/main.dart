@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:astro_photo_environment/capturing/session_details_page.dart';
 import 'package:astro_photo_environment/pages/capturing/capturing_settings_page.dart';
+import 'package:astro_photo_environment/pages/capturing/sessions_page.dart';
 import 'package:astro_photo_environment/settings/connection_settings_page.dart';
 import 'package:astro_photo_environment/settings/equipment_settings_page.dart';
 import 'package:astro_photo_environment/settings/settings_page.dart';
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget{
         '/settings/connection': (context) => ConnectionSettingsPage(),
         '/capturing/settings': (context) => CapturingSettingsPage(),
         '/settings/equipment': (context) => EquipmentSettingsPage(),
+        '/sessions/detail': (context) => SessionDetailsPage()
       },
     );
   }

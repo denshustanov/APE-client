@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:astro_photo_environment/capturing/session.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'http_service.dart';
@@ -46,7 +47,9 @@ class HttpServiceImpl extends HttpService{
   final String telescopeSlewRoute = '/telescope/slew';
   final String telescopeGetCoordinatesRoute = '/telescope/get-position';
   final String telescopeGoToRoute = '/telescope/goto';
-  final String cameraGetImageRoute = '/camera/get-image';
+  final String cameraGetImageRoute = '/images/get-image';
+  final String imagesGetSessionsRoute = '/images/get-state';
+  final String imagesCreateSessionRotue = '/images/new-session';
 
 
   @override
@@ -71,10 +74,11 @@ class HttpServiceImpl extends HttpService{
   }
 
   @override
-  Future<String> capture() async{
+  Future<String> capture(String type) async{
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
-    Response res = await get(_serverURL+':'+_serverPort.toString()+captureCameraRoute,
+    Response res = await get(_serverURL+':'+_serverPort.toString()+captureCameraRoute+
+        '?type='+type,
         headers: <String, String>{'authorization': basicAuth});
     if (res.statusCode == 200){
       return res.body.toString();
@@ -238,6 +242,32 @@ class HttpServiceImpl extends HttpService{
   @override
   String getImageURL(String imagePath) {
     return _serverURL+':'+_serverPort.toString()+cameraGetImageRoute+ '?path='+imagePath;
+  }
+
+  @override
+  void createSession(String sessionName) async{
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_serverURL+':'+_serverPort.toString()+imagesCreateSessionRotue+
+        '?name='+sessionName,
+        headers: <String, String>{'authorization': basicAuth});
+    if(res.statusCode != 200){
+      throw Exception('Can not connect to server');
+    }
+  }
+
+  @override
+  Future<List<Session>> getSessions() async{
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$_username:$_password'));
+    Response res = await get(_serverURL+':'+_serverPort.toString()+imagesGetSessionsRoute,
+        headers: <String, String>{'authorization': basicAuth});
+    print(res.body);
+    Iterable l = jsonDecode(res.body);
+
+    List<Session> sessions = List<Session>.from(l.map((model) => Session.fromJson(model)));
+
+    return sessions;
   }
 
 

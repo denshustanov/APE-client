@@ -1,3 +1,4 @@
+import 'package:astro_photo_environment/pages/capturing/sessions_page.dart';
 import 'package:astro_photo_environment/services/http_service.dart';
 import 'package:flutter/material.dart';
 import '../../service_locator.dart';
@@ -16,7 +17,8 @@ class _HomePageState extends State<HomePage> {
   static final List<String> _widgetOptionCaptions = <String>[
     'Setup',
     'Capturing',
-    'Guiding'
+    'Guiding',
+    'Gallery'
   ];
 
   int _selectedIndex = 0;
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage> {
     Widget _equipmentPage = EquipmentPage();
     Widget _photoPage = CapturingPage();
     Widget _guidingPage = const GuidingPage();
+    Widget _sessionsPage = SessionsPage();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +45,8 @@ class _HomePageState extends State<HomePage> {
         children: [
           _equipmentPage,
           _photoPage,
-          _guidingPage
+          _guidingPage,
+          _sessionsPage
         ],
         index: _selectedIndex,
       )),
@@ -58,6 +63,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.location_searching),
               label: 'Guiding'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.image_outlined),
+              label: 'Gallery'
           )
         ],
         selectedItemColor: Colors.redAccent,

@@ -15,6 +15,7 @@ class _CapturingPageState extends State<CapturingPage> {
   final String _imagePlaceholderPath = 'assets/images/image_placeholder.png';
   bool _noImage = true;
   String _imageURL = '';
+  String _imageType = 'test';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _CapturingPageState extends State<CapturingPage> {
   }
 
   void _captureImage() async{
-    String imagePath = await _httpService.capture();
+    String imagePath = await _httpService.capture(_imageType);
     setState(() {
       _imageURL = _httpService.getImageURL(imagePath);
       _noImage = false;

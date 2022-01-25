@@ -1,11 +1,12 @@
 import 'package:astro_photo_environment/capturing/camera_config.dart';
+import 'package:astro_photo_environment/capturing/session.dart';
 
 abstract class HttpService {
   Future<CameraConfig> connectCamera();
 
   void disconnectCamera();
 
-  Future<String> capture();
+  Future<String> capture(String type);
 
   void setIsoConfig(String value);
 
@@ -36,5 +37,10 @@ abstract class HttpService {
   void setPassword(String password);
 
   String getImageURL(String imagePath);
+
+  Future<List<Session>> getSessions();
+
+  void createSession(String sessionName);
+
 
 }
